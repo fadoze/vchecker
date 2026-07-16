@@ -69,10 +69,10 @@
     <div class="card">
         <img src="icon-round-corners.png" alt="vChecker" class="logo">
         <h1>vChecker</h1>
-        <p class="version" id="version">Загрузка…</p>
-        <p class="loading" id="loading">Получение информации…</p>
-        <p class="error" id="error">Не удалось загрузить информацию о версии</p>
-        <a href="#" class="btn" id="downloadBtn" style="display:none">
+        <p class="version" id="version">Версия 2.7.8</p>
+        <p class="loading" id="loading">Проверка обновлений…</p>
+        <p class="error" id="error">Не удалось проверить обновления</p>
+        <a href="http://2.26.96.243/vChecker-2.7.8.apk" class="btn" id="downloadBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
@@ -85,18 +85,15 @@
     </div>
 
     <script>
-        fetch('https://vchecker.mooo.com/version')
-            .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json() })
-            .then(function(data) {
-                document.getElementById('version').textContent = 'Версия ' + data.current_version;
+        fetch('http://2.26.96.243/version')
+            .then(function(r) { if (!r.ok) throw Error(); return r.json() })
+            .then(function(d) {
+                document.getElementById('version').textContent = 'Версия ' + d.current_version;
                 document.getElementById('loading').style.display = 'none';
-                var btn = document.getElementById('downloadBtn');
-                btn.href = data.update_url;
-                btn.style.display = 'inline-flex';
+                document.getElementById('downloadBtn').href = d.update_url;
             })
-            .catch(function(e) {
+            .catch(function() {
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('version').textContent = 'Версия недоступна';
                 document.getElementById('error').style.display = 'block';
             });
     </script>
